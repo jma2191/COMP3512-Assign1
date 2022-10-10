@@ -17,11 +17,10 @@
 <?php generateHeader(); ?>
 <body>
 <main class="grid-container">
-    testing <br/>
     <?php
         $data = $songGate -> getSingleSong($pdo,"Youngblood");
         foreach($data as $value){
-            echo $value['title'].', artist name, artist type, genere, '.$value['year'].', duration <br/>';
+            echo $value['title'].', '.$value['name'].', '.$value['type'].', '.$value['genre'].', '.$value['year'].','. $value['duration'] .'<br/>';
             echo "<ul>";
             echo '<li> <label for="bpm"> bpm:</label> <progress id="bpm" value="'.$value['bpm'].'" max=100> '.$value['bpm'].'</progress> </li>';
             echo '<li> <label for="energy"> energy:</label> <progress id="energy". value="'.$value['energy'].'" max=100> '.$value['energy'].'</progress> </li>';
