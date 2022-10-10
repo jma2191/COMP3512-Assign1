@@ -1,16 +1,23 @@
 <?php
     function generateHeader(){
         echo "<head>";
-        echo "<title> COMP 3512 Assign1 - Jessica Ma";
+        echo "<meta charset=utf-8>";
+        echo "<title> COMP 3512 Assign1 - Jessica Ma</title>";
         echo "</head>";
+        echo "<nav>";
+        echo "<a href='home-page.php'>Home</a>";
+        echo "<a href='search-page.php'>Search</a>";
+        echo "<a href='view-favourites-page.php'>Favourites</a>";
+        echo "<a href='view-favourites-page.php'>Favourites</a>";
+        echo "</nav>";
     }
 
     function generateFooter(){
         $githubLink = "https://github.com/jma2191/COMP3512-Assign1";
 
         echo "<footer>";
-        echo "COMP3512 &copy; Jessica Ma </br>";
-        echo "Github Repo: $githubLink";
+        echo "<p> COMP3512 &copy; Jessica Ma </br>";
+        echo "Github Repo: $githubLink </p>";
         echo "</footer>";
     }
 ?>

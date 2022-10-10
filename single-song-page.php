@@ -1,14 +1,15 @@
 <?php
-    include "includes/header-and-footer.php";
+    include('includes\head-and-footer.php');
+    require_once('config.inc.php');
 ?>
-
-
-<html lang=en>
-    <?=generateHeader();?>
+<!DOCTYPE html>
+<html>
+<?php generateHeader(); ?>
 <body>
-<main>
-</main>
-<footer>
-</footer>
+<main class="grid-container">
+    testing
+</main>  
+<?php generateFooter(); ?> 
 </body>
 </html>
+
