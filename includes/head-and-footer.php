@@ -17,7 +17,7 @@
 
         echo "<footer>";
         echo "<p> COMP3512 &copy; Jessica Ma </br>";
-        echo "Github Repo: $githubLink </p>";
+        echo "<a href=$githubLink>Github Repository</a>";
         echo "</footer>";
     }
 ?>
