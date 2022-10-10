@@ -18,7 +18,7 @@
 <body>
 <main class="grid-container">
     <?php
-        $data = $songGate -> getSingleSong($pdo,"Youngblood");
+        $data = $songGate -> getSingleSong("Youngblood");
         foreach($data as $value){
             echo $value['title'].', '.$value['name'].', '.$value['type'].', '.$value['genre'].', '.$value['year'].','. $value['duration'] .'<br/>';
             echo "<ul>";
@@ -37,4 +37,6 @@
 <?php generateFooter(); ?> 
 </body>
 </html>
+
+<?php $pdo =null ?>
 
