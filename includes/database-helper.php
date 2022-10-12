@@ -1,4 +1,5 @@
 <?php
+
 class DatabaseHelper{
     public static function createConnection($conn, $username, $password){
         $pdo = new PDO($conn, $username, $password);
@@ -30,8 +31,8 @@ class DatabaseHelper{
 
 class SongDB{
 
-    private static $sqlSearch = "SELECT title, artist_name as artist, year, genre, popularity
-    FROM songs 
+    private static $sql = "SELECT title, artist_name as name, type_name as type, genre_name as genre, year, duration, bpm, energy, danceability, liveness, valence, acousticness, speechiness, popularity, songs.artist_id, artist_type_id, songs.genre_id, song_id
+    FROM songs
     LEFT JOIN artists ON artists.artist_id=songs.artist_id
     LEFT JOIN genres ON genres.genre_id=songs.genre_id
     LEFT JOIN types ON types.type_id=artist_type_id";
@@ -40,44 +41,69 @@ class SongDB{
         $this->pdo = $connection;
     }
 
-    public function getSingleSong($songTitle){
-        $sql = 'SELECT title, artist_name as name, type_name as type, genre_name as genre, year, duration, bpm, energy, danceability, liveness, valence, acousticness, speechiness, popularity, songs.artist_id, artist_type_id, songs.genre_id
-        FROM songs 
-        LEFT JOIN artists ON artists.artist_id=songs.artist_id
-        LEFT JOIN genres ON genres.genre_id=songs.genre_id
-        LEFT JOIN types ON types.type_id=artist_type_id
-        WHERE title = :songTitle;'; //may need to be change to song id
-        $results = DatabaseHelper::runQuerySinglePrepare($this->pdo, $sql, $songTitle, ':songTitle');
+    public function getSingleSong($songID){
+        $sql = self::$sql. ' WHERE song_id ='. $songID; //may need to be change to song id
+        $results = DatabaseHelper::runQuery($this->pdo, $sql);
+        return $results -> fetchAll();
+    }
+
+    public function searchByAll(){
+        $sql = self::$sql;
+        $results = DatabaseHelper::runQuery($this->pdo, $sql);
         return $results -> fetchAll();
     }
 
     public function searchByTitle($title){
-        $sql = self::$sqlSearch." WHERE title LIKE %:songTitle%"; //near match because user can search partial
-        $results = DatabaseHelper::runQuerySinglePrepare($this->pdo, $sql, $title, ':songTitle');
+        $sql = self::$sql." WHERE title LIKE :songTitle"; //near match because user can search partial
+        $results = DatabaseHelper::runQuerySinglePrepare($this->pdo, $sql, "%$title%", ':songTitle');
         return $results -> fetchAll();
     }
 
     public function searchByYear($less, $greater){
-        $sql = self::$sqlSearch." WHERE year <= $greater AND year >= $less";
+        $sql = self::$sql." WHERE year <= $greater AND year >= $less";
+        $results = DatabaseHelper::runQuery($this->pdo, $sql);
+        return $results -> fetchAll();
+    }
+
+    public function searchByYearGreater($greater){
+        $sql = self::$sql." WHERE year >= $greater";
+        $results = DatabaseHelper::runQuery($this->pdo, $sql);
+        return $results -> fetchAll();
+    }
+
+    public function searchByYearLesser($less){
+        $sql = self::$sql." WHERE year <= $less";
         $results = DatabaseHelper::runQuery($this->pdo, $sql);
         return $results -> fetchAll();
     }
 
     public function searchByPopularity($less, $greater){
-        $sql = self::$sqlSearch ." WHERE popularity <= $greater AND year >= $less";
+        $sql = self::$sql ." WHERE popularity <= $greater AND popularity >= $less";
+        $results = DatabaseHelper::runQuery($this->pdo, $sql);
+        return $results -> fetchAll();
+    }
+
+    public function searchByPopularityGreater($greater){
+        $sql = self::$sql ." WHERE popularity >= $greater";
+        $results = DatabaseHelper::runQuery($this->pdo, $sql);
+        return $results -> fetchAll();
+    }
+
+    public function searchByPopularityLesser($less){
+        $sql = self::$sql ." WHERE popularity <= $less";
         $results = DatabaseHelper::runQuery($this->pdo, $sql);
         return $results -> fetchAll();
     }
 
     public function searchByArtist($artist){
-        $sql = self::$sqlSearch." WHERE artist = :artist";
+        $sql = self::$sql." WHERE artist_name = :artist";
         $results = DatabaseHelper::runQuerySinglePrepare($this->pdo, $sql, $artist, ':artist');
         return $results -> fetchAll();
     }
 
     public function searchByGenre($genre){
-        $sql = self::$sqlSearch." WHERE genre = :genre";
-        $results = DatabaseHelper::runQuerySinglePrepare($this->pdo, $sql, $title, ':genre');
+        $sql = self::$sql." WHERE genre_name = :genre";
+        $results = DatabaseHelper::runQuerySinglePrepare($this->pdo, $sql, $genre, ':genre');
         return $results -> fetchAll();
     }
 

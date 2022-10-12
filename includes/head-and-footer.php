@@ -7,7 +7,7 @@
         echo "<nav>";
         echo "<a href='home-page.php'>Home</a>";
         echo "<a href='search-page.php'>Search</a>";
-        echo "<a href='view-favourites-page.php'>Favourites</a>";
+        echo "<a href='browse-search-result-page.php'>Browse</a>";
         echo "<a href='view-favourites-page.php'>Favourites</a>";
         echo "</nav>";
     }

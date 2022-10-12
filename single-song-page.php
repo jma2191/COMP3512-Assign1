@@ -18,7 +18,7 @@
 <body>
 <main class="grid-container">
     <?php
-        $data = $songGate -> getSingleSong("Youngblood");
+        $data = $songGate -> getSingleSong($_GET['song_id']);
         foreach($data as $value){
             echo $value['title'].', '.$value['name'].', '.$value['type'].', '.$value['genre'].', '.$value['year'].','. $value['duration'] .'<br/>';
             echo "<ul>";
