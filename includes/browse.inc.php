@@ -5,6 +5,7 @@
     function displaySearch(){
         $data = getDBSongData();
 
+        if(count($data) != 0){
         echo "<table>";
         echo "<th> Title </th>";
         echo "<th> Artist </th>";
@@ -25,52 +26,57 @@
             echo "</tr>";
         }
         echo "</table>";
+        }
+        else{
+            echo "<p class='search-no-results'> There seems to be no song that meets your search conditions </p>";
+        }
     }
 
     function getDBSongData(){
         try{
             $pdo = DatabaseHelper::createConnection(DBCONNSTRING,DBUSER,DBPASS);
             $songGate = new SongDB($pdo);
-            $data = null;
-
-            /*$radType = $_POST['search-rad'];
+            $data = $songGate -> searchByAll(); 
+            //this is to catch cases where user clicked submit with no input
+            //made assumption that if no input is in but user clicked search it will display all songs
+            
+            $radType = $_GET['search-rad'];
             switch ($radType){
                 case 'title-rad':
-                    $data = $songGate -> searchByTitle($_GET['title']);
+                    if(!empty($_GET['title'])){
+                        $data = $songGate -> searchByTitle($_GET['title']);
+                    }
+                    break;
                 case 'artist-rad':
-                    $data = $songGate -> searchByArtist($_GET['artist']);
-            }*/
-
-            //find better way to validate if raido buttons are selected
-            if(!empty($_GET['title'])){
-                $data = $songGate -> searchByTitle($_GET['title']);
-            }
-            else if(!empty($_GET['artist'])){
-                $data = $songGate -> searchByArtist($_GET['artist']);
-            }
-            else if(!empty($_GET['genres'])){
-                $data = $songGate -> searchByGenre($_GET['genres']);
-            }
-            else if(!empty($_GET['year-less']) or !empty($_GET['year-great'])){
-                if(!empty($_GET['year-great'])){
+                    if(!empty($_GET['artist'])){
+                        $data = $songGate -> searchByArtist($_GET['artist']);
+                    }
+                    break;
+                case 'genre-rad':
+                    if(!empty($_GET['genres'])){
+                        $data = $songGate -> searchByArtist($_GET['genres']);
+                    }
+                    break;
+                case 'year-rad':
+                    $subRadType = $_GET['years-rad'];
+                    if($subRadType == 'year-rad-great' and !empty($_GET['year-great'])){
                     $data = $songGate -> searchByYearGreater($_GET['year-great'] );
-                }
-                else{
+                    }
+                    else if($subRadType == 'year-rad-less' and !empty($_GET['year-less'])){
                     $data = $songGate -> searchByYearLesser($_GET['year-less'] );
-                }
-            }
-            else if(!empty($_GET['pop-less']) or !empty($_GET['pop-great'])){
-                if(!empty($_GET['pop-great'])){
+                    }
+                    break;
+                case 'pop-rad':
+                    $subRadType = $_GET['popu-rad'];
+                    if($subRadType == 'pop-rad-great' and !empty($_GET['pop-great'])){
                     $data = $songGate -> searchByPopularityGreater($_GET['pop-great'] );
-                }
-                else{
-                    $data = $songGate -> searchByPopularityLesser($_GET['pop-less'] );
-                }
+                    }
+                    else if($subRadType == 'pop-rad-less' and !empty($_GET['pop-less'])){
+                        $data = $songGate -> searchByPopularityLesser($_GET['pop-less'] );
+                    }
+                    break;
             }
-            else{
-                $data = $songGate -> searchByAll();
-            }
-
+            
 
             return $data;
     

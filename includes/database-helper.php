@@ -59,12 +59,6 @@ class SongDB{
         return $results -> fetchAll();
     }
 
-    public function searchByYear($less, $greater){
-        $sql = self::$sql." WHERE year <= $greater AND year >= $less";
-        $results = DatabaseHelper::runQuery($this->pdo, $sql);
-        return $results -> fetchAll();
-    }
-
     public function searchByYearGreater($greater){
         $sql = self::$sql." WHERE year >= $greater";
         $results = DatabaseHelper::runQuery($this->pdo, $sql);
@@ -73,12 +67,6 @@ class SongDB{
 
     public function searchByYearLesser($less){
         $sql = self::$sql." WHERE year <= $less";
-        $results = DatabaseHelper::runQuery($this->pdo, $sql);
-        return $results -> fetchAll();
-    }
-
-    public function searchByPopularity($less, $greater){
-        $sql = self::$sql ." WHERE popularity <= $greater AND popularity >= $less";
         $results = DatabaseHelper::runQuery($this->pdo, $sql);
         return $results -> fetchAll();
     }
