@@ -142,7 +142,7 @@ class SongDB{
     }
 
     public function getTopRunningSongs(){
-        $sql = "SELECT title, bpm, speechiness
+        $sql = "SELECT title, bpm
         FROM songs
         GROUP BY title 
         HAVING bpm > 100 AND bpm < 115
@@ -198,7 +198,7 @@ class GenreDB{
     }
 
     public function getTopGenres(){
-        $sql = "SELECT genre, COUNT(title) as numSongs, genres.genre_id
+        $sql = "SELECT genre_name as genre, COUNT(title) as numSongs, genres.genre_id
         FROM genres
         INNER JOIN songs
         ON songs.genre_id = genres.genre_id
