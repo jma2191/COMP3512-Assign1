@@ -2,7 +2,8 @@
     require_once('config.inc.php');
     include('includes\head-and-footer.php');
     include('includes\database-helper.php');
-    include('includes\home.inc.php');
+
+    $githubLink = "https://github.com/jma2191/COMP3512-Assign1";
 
     try{
         $pdo = DatabaseHelper::createConnection(DBCONNSTRING,DBUSER,DBPASS);
@@ -21,6 +22,10 @@
 <body>
 <main class="grid-container">
     <h1>Home Page</h1>
+    <p>
+        COMP 3512 Assignment 1 &copy; Jessica Ma Fall 2022 <br/>
+        Git Hub Repository: <a href='<?=$githubLink?>'><?=$githubLink?></a>  
+    </p>
     <div>
         <h2>Top Genres</h2>
         <?php

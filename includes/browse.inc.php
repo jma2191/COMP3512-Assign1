@@ -5,7 +5,9 @@
     function displaySearch(){
         $data = getDBSongData();
 
-        if(count($data) != 0){
+        if(count($data) == 0){
+            echo "<p class='search-no-results'> There seems to be no song that meets your search conditions </p>";
+        }
         echo "<table>";
         echo "<th> Title </th>";
         echo "<th> Artist </th>";
@@ -21,15 +23,11 @@
             echo "<td>".$value['year']."</td>";
             echo "<td>".$value['genre']."</td>";
             echo "<td>".$value['popularity']."</td>";
-            echo "<td> <form method='post' action='view-favourites-page.php'><button>Add to Favourites </button></form> </td>";
+            echo "<td> <form method='post' action='view-favourites-page.php'><button type='submit' value='".$value['song_id']."' name='add'>Add to Favourites </button></form> </td>";
             echo "<td> <form method='get' action='single-song-page.php?".$value['song_id']."'><button type='submit' value='".$value['song_id']."' name='song_id'>View</button></form> </td>";
             echo "</tr>";
         }
         echo "</table>";
-        }
-        else{
-            echo "<p class='search-no-results'> There seems to be no song that meets your search conditions </p>";
-        }
     }
 
     function getDBSongData(){
@@ -40,6 +38,11 @@
             //this is to catch cases where user clicked submit with no input
             //made assumption that if no input is in but user clicked search it will display all songs
             
+            if(!isset($_GET['search-rad'])){
+                //if user went directly to browse page remove the error line here
+                return $data;
+            }
+
             $radType = $_GET['search-rad'];
             switch ($radType){
                 case 'title-rad':
@@ -54,7 +57,7 @@
                     break;
                 case 'genre-rad':
                     if(!empty($_GET['genres'])){
-                        $data = $songGate -> searchByArtist($_GET['genres']);
+                        $data = $songGate -> searchByGenre($_GET['genres']);
                     }
                     break;
                 case 'year-rad':
