@@ -23,7 +23,7 @@
             echo "<td>".$value['year']."</td>";
             echo "<td>".$value['genre']."</td>";
             echo "<td>".$value['popularity']."</td>";
-            echo "<td> <form method='post' action='view-favourites-page.php'><button type='submit' value='".$value['song_id']."' name='add'>Add to Favourites </button></form> </td>";
+            echo "<td> <a href='view-favourites-page.php?add=".$value['song_id']."' class='button'>Add to Favourites </a> </td>";
             echo "<td> <form method='get' action='single-song-page.php?".$value['song_id']."'><button type='submit' value='".$value['song_id']."' name='song_id'>View</button></form> </td>";
             echo "</tr>";
         }

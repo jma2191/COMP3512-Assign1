@@ -1,51 +1,50 @@
 <?php
-    function setMyCookies(){
-        if(isset($_POST['add'])){
+    function setUpSession(){
+        session_start();
+        if(isset($_GET['add'])){
             addFavourite();
-            header("Refresh:0"); //if condition will prevent it from constantly refreshing
         }   
 
-        if(!isset($_COOKIE['favourites'])){
-            //if there is no cookies we still want the page to function as normal
-            return;
-        }
-
-
-        if(isset($_POST['remove'])){
+        if(isset($_GET['remove'])){
             removeFavourite();
-            header("Refresh:0"); //if condition will prevent it from constantly refreshing
         } 
-
     }
 
     function addFavourite(){
-        if(isset($_COOKIE['favourites'])){
-            $value = $_COOKIE['favourites'];
-        }
-        else {
-            $value = "";
+        if(!isset($_SESSION['favourites'])){
+            $_SESSION['favourites'] = [];
         }
 
-        if(str_contains($value,$_POST['add'].", ")){
-            return;
-        }
-        else{
-            $value .= $_POST['add'].", ";
-        }
-
-        //only makes favourites last for 1 day find away to make it last perm
-        $expiryTime = time()+(60*60*24);
-        
-        setcookie("favourites", $value, $expiryTime);
+        $favourites = $_SESSION['favourites'];
+        $favourites[$_GET['add']] = $_GET['add']; //making it assoicative array to have an easy time removing and adding data
+        $_SESSION['favourites'] = $favourites;
+        header("location: view-favourites-page.php"); //refresh page after changes are made
     }
 
     function removeFavourite(){
-        $value = $_COOKIE['favourites'];
-        $value = str_replace($_POST['remove'].", ","",$value);
+        if(!isset($_SESSION['favourites'])){
+            return; // do nothing 
+        }
 
-        //only makes favourites last for 1 day find away to make it last perm
-        $expiryTime = time()+(60*60*24);
-        
-        setcookie("favourites", $value, $expiryTime);
+        $favourites = $_SESSION['favourites'];
+        unset($favourites[$_GET['remove']]); //completely removes it from the array
+        $_SESSION['favourites'] = $favourites;
+        header("location: view-favourites-page.php"); //refresh page after changes are made
+    }
+
+    function getFavouriteSongIDs(){
+        //returns a string of song ids fit for sql
+        if(!isset($_SESSION['favourites'])){
+            return ""; //return nothing if there no favourites
+        }
+
+        $string = "";
+        $IDList = $_SESSION['favourites'];
+
+        foreach($IDList as $id){
+            $string .= $id.",";
+        }
+
+        return substr($string,0,-1);//remove the last comma
     }
 ?>

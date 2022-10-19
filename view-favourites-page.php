@@ -4,22 +4,26 @@
     include('includes\head-and-footer.php');
     include('includes\favourites.inc.php');
 
-    setMyCookies();
+    setUpSession();
 
     try{
         $pdo = DatabaseHelper::createConnection(DBCONNSTRING,DBUSER,DBPASS);
         $songGate = new SongDB($pdo);
-
-        $data = array(); //assuming there are no cookies to begin with first
-        if(isset($_COOKIE['favourites'])){
-            $cookie = substr($_COOKIE['favourites'],0,-2);
-            if(str_contains($cookie,",")){
-                $data = $songGate -> getSongs("(".$cookie.")");
+        
+        $data = array(); //assuming there are none to begin with
+        if(isset($_SESSION['favourites'])){
+            $sql = getFavouriteSongIDs();
+            if($sql == ""){
+                $data = array();//unlikely it will change before hand but just incase
             }
-            else{
-                $data = $songGate -> getSingleSong($cookie);
+            else if(substr_count($sql,",")>=1){
+                $data = $songGate -> getSongs($sql);
+            }else{
+                $data = $songGate -> getSingleSong($sql);
             }
         }
+
+        $pdo = null;
     }catch (Exception $e){
         die($e ->getMessage());
     }    
@@ -47,7 +51,7 @@
                 echo "<td>".$value['year']."</td>";
                 echo "<td>".$value['genre']."</td>";
                 echo "<td>".$value['popularity']."</td>";
-                echo "<td> <form method='post' action='view-favourites-page.php'><button type='submit' value='".$value['song_id']."' name='remove'>Remove</button></form></td>";
+                echo "<td> <a href='view-favourites-page.php?remove=".$value['song_id']."' class='button'>Remove</a> </td>";
                 echo "<td> <form method='get' action='single-song-page.php?".$value['song_id']."'><button type='submit' value='".$value['song_id']."' name='song_id'>View</button></form> </td>";
                 echo "</tr>";
             }
