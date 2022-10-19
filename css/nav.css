@@ -1,0 +1,13 @@
+nav{
+    display: flex;
+    flex-direction: row;
+
+    width: 100%;
+    gap: 5px;
+}
+
+nav a{
+    flex: auto;
+    border: 3px solid;
+    text-align: center;
+}

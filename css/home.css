@@ -1,0 +1,36 @@
+main{
+    text-align: center;
+}
+
+.grid-container{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 1px;
+    padding: 0;
+    margin: 0;
+}
+
+.grid{
+    width: 445px;
+    height: 300px;
+    border: 5px solid;
+
+}
+
+.grid-1{
+    grid-column-start: 0;
+    grid-column-end: 1;
+}
+
+table{
+    margin-left: auto;
+    margin-right: auto;
+}
+td{
+    padding: 3px;
+    text-align: center;
+    vertical-align: middle;
+}
+section{
+    overflow: auto;
+}

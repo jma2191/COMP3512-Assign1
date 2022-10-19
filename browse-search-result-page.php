@@ -6,7 +6,14 @@
 
 <!DOCTYPE html>
 <html>
-<?php generateHeader(); ?>
+<head>
+    <?php 
+    generateHeader(); 
+    generateNav();
+    ?>
+    <link rel="stylesheet" href="css\nav.css" />
+    <link rel="stylesheet" href="css\footer.css" />
+</head>
 <body>
 <main class="grid-container">
     <form action="browse-search-result-page.php"> <input type="submit" value="View All"/> </form>

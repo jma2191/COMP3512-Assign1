@@ -1,0 +1,9 @@
+footer{
+    display: flex;
+    border: 3px solid;
+}
+
+footer p{
+    text-align: center;
+    flex: auto;
+}

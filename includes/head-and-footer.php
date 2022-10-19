@@ -1,9 +1,10 @@
 <?php
     function generateHeader(){
-        echo "<head>";
         echo "<meta charset=utf-8>";
         echo "<title> COMP 3512 Assign1 - Jessica Ma</title>";
-        echo "</head>";
+    }
+
+    function generateNav(){
         echo "<nav>";
         echo "<a href='home-page.php'>Home</a>";
         echo "<a href='search-page.php'>Search</a>";
@@ -18,6 +19,7 @@
         echo "<footer>";
         echo "<p> COMP3512 &copy; Jessica Ma </br>";
         echo "<a href=$githubLink>Github Repository</a>";
+        echo "</p>";
         echo "</footer>";
     }
 ?>
