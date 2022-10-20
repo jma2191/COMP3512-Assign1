@@ -1,7 +1,7 @@
 <?php
     require_once('includes\config.inc.php');
-    include('includes\database-helper.php');
-    include('includes\head-and-footer.php');
+    include('includes\database-helper.inc.php');
+    include('includes\head-and-footer.inc.php');
     include('includes\favourites.inc.php');
 
     setUpSession();
@@ -40,7 +40,6 @@
 </head>
 <body>
 <main class="grid-container">
-    <form action="browse-search-result-page.php"> <input type="submit" value="View All"/> </form>
     <section>
     <?php
             echo "<table>";
@@ -58,7 +57,7 @@
                 echo "<td>".$value['year']."</td>";
                 echo "<td>".$value['genre']."</td>";
                 echo "<td>".$value['popularity']."</td>";
-                echo "<td> <a href='view-favourites-page.php?remove=".$value['song_id']."' class='button'>Remove</a> </td>";
+                echo "<td> <a href='view-favourites-page.php?remove=".$value['song_id']."'><button>Remove</button></a> </td>";
                 echo "<td> <form method='get' action='single-song-page.php?".$value['song_id']."'><button type='submit' value='".$value['song_id']."' name='song_id'>View</button></form> </td>";
                 echo "</tr>";
             }

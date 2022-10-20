@@ -1,7 +1,7 @@
 <?php
     require_once('includes\config.inc.php');
-    include('includes\head-and-footer.php');
-    include('includes\database-helper.php');
+    include('includes\head-and-footer.inc.php');
+    include('includes\database-helper.inc.php');
 
     $githubLink = "https://github.com/jma2191/COMP3512-Assign1";
 
@@ -48,7 +48,7 @@
                         echo "<th>Number of Songs</th>";
                         foreach($data as $value){
                         echo "<tr>";
-                        echo "<td>".$value['genre']."</td>";
+                        echo "<td> <a href='browse-search-result-page.php?search-rad=genre-rad&title=&artist=&genres=".$value['genre']."&year-less=&year-great=&pop-less=&pop-great='>".$value['genre']."</a></td>";
                         echo "<td>". $value['numSongs']."</td>";
                         echo "</tr>";
                         }
@@ -70,14 +70,14 @@
                     echo "<th>Number of Songs</th>";
                     foreach($data as $value){
                     echo "<tr>";
-                    echo "<td>".$value['name']."</td>";
+                    echo "<td><a href='browse-search-result-page.php?search-rad=artist-rad&title=&artist=".$value['name']."&genres=&year-less=&year-great=&pop-less=&pop-great='>".$value['name']."</a></td>";
                     echo "<td>".$value['numSongs'] ."</td>";
                     echo "</tr>";
                     }
                     echo "</table>";
                 }catch (Exception $e){
                     die($e ->getMessage());
-                }        
+                }            
             ?>
             </div>
         </section>
@@ -86,19 +86,7 @@
             <div>
             <?php
                 try{
-                    $data = $songGate->getTopPopularSongs();
-                    echo "<table>";
-                    echo "<th>Title</th>";
-                    echo "<th>Artist</th>";
-                    echo "<th>Popularity</th>";
-                    foreach($data as $value){
-                    echo "<tr>";
-                    echo "<td>".$value['title']."</td>";
-                    echo "<td>".$value['name']."</td>";
-                    echo "<td>".$value['popularity']."</td>";
-                    echo "</tr>";
-                    }
-                    echo "</table>";
+                    generateHomeList($songGate->getTopPopularSongs());
                 }catch (Exception $e){
                     die($e ->getMessage());
                 }        
@@ -110,19 +98,7 @@
             <div>
             <?php
                 try{
-                    $data = $songGate->getTopOneHitsSongs();
-                    echo "<table>";
-                    echo "<th>Title</th>";
-                    echo "<th>Artist</th>";
-                    echo "<th>Popularity</th>";
-                    foreach($data as $value){
-                    echo "<tr>";
-                    echo "<td>".$value['title']."</td>";
-                    echo "<td>".$value['name']."</td>";
-                    echo "<td>".$value['popularity']."</td>";
-                    echo "</tr>";
-                    }
-                    echo "</table>";
+                    generateHomeList($songGate->getTopOneHitsSongs());
                 }catch (Exception $e){
                     die($e ->getMessage());
                 }        
@@ -134,17 +110,7 @@
             <div>
             <?php
                 try{
-                    $data = $songGate->getTopAcousticSongs();
-                    echo "<table>";
-                    echo "<th>Title</th>";
-                    echo "<th>Acousticness</th>";
-                    foreach($data as $value){
-                    echo "<tr>";
-                    echo "<td>".$value['title']."</td>";
-                    echo "<td>".$value['acousticness']."</td>";
-                    echo "</tr>";
-                    }
-                    echo "</table>";
+                    generateHomeList($songGate->getTopAcousticSongs());
                 }catch (Exception $e){
                     die($e ->getMessage());
                 }        
@@ -156,17 +122,7 @@
             <div>
             <?php
                 try{
-                    $data = $songGate->getTopClubSongs();
-                    echo "<table>";
-                    echo "<th>Title</th>";
-                    echo "<th>Danceability</th>";
-                    foreach($data as $value){
-                    echo "<tr>";
-                    echo "<td>".$value['title']."</td>";
-                    echo "<td>".$value['danceability']."</td>";
-                    echo "</tr>";
-                    }
-                    echo "</table>";
+                    generateHomeList($songGate->getTopClubSongs());
                 }catch (Exception $e){
                     die($e ->getMessage());
                 }        
@@ -178,17 +134,7 @@
             <div>
             <?php
                 try{
-                    $data = $songGate->getTopRunningSongs();
-                    echo "<table>";
-                    echo "<th>Title</th>";
-                    echo "<th>bpm</th>";
-                    foreach($data as $value){
-                    echo "<tr>";
-                    echo "<td>".$value['title']."</td>";
-                    echo "<td>". $value['bpm']."</td>";
-                    echo "</tr>";
-                    }
-                    echo "</table>";
+                    generateHomeList($songGate->getTopRunningSongs());
                 }catch (Exception $e){
                     die($e ->getMessage());
                 }        
@@ -200,19 +146,7 @@
             <div>
             <?php
                 try{
-                    $data = $songGate->getTopStudySongs();
-                    echo "<table>";
-                    echo "<th>Title</th>";
-                    echo "<th>bpm</th>";
-                    echo "<th>Speechiness</th>";
-                    foreach($data as $value){
-                    echo "<tr>";
-                    echo "<td>".$value['title']."</td>";
-                    echo "<td>". $value['bpm']."</td>";
-                    echo "<td>". $value['speechiness']."</td>";
-                    echo "</tr>";
-                    }
-                    echo "</table>";
+                    generateHomeList($songGate->getTopStudySongs());
                 }catch (Exception $e){
                     die($e ->getMessage());
                 }        
@@ -225,5 +159,21 @@
 </body>
 </html>
 
-<?php $pdo =null ?>
+<?php 
+
+function generateHomeList($data){
+    echo "<table>";
+    echo "<th>Title</th>";
+    echo "<th>Artist</th>";
+    foreach($data as $value){
+    echo "<tr>";
+    echo "<td><a href='single-song-page.php?song_id=".$value['song_id']."'>".$value['title']."</a></td>";
+    echo "<td>".$value['name']."</td>";
+    echo "</tr>";
+    }
+    echo "</table>";
+}
+
+
+$pdo =null ?>
 

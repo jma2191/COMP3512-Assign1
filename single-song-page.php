@@ -1,7 +1,7 @@
 <?php
     require_once('includes\config.inc.php');
-    include('includes\head-and-footer.php');
-    include('includes\database-helper.php');
+    include('includes\head-and-footer.inc.php');
+    include('includes\database-helper.inc.php');
 
     try{
         $pdo = DatabaseHelper::createConnection(DBCONNSTRING,DBUSER,DBPASS);
@@ -24,20 +24,26 @@
 </head>
 <body>
 <main class="grid-container">
+    <h1>Song Details</h1>
     <?php
         $data = $songGate -> getSingleSong($_GET['song_id']);
         foreach($data as $value){
-            echo $value['title'].', '.$value['name'].', '.$value['type'].', '.$value['genre'].', '.$value['year'].','. $value['duration'] .'<br/>';
-            echo "<ul>";
-            echo '<li> <label for="bpm"> bpm:</label> <progress id="bpm" value="'.$value['bpm'].'" max=100> '.$value['bpm'].'</progress> </li>';
-            echo '<li> <label for="energy"> energy:</label> <progress id="energy". value="'.$value['energy'].'" max=100> '.$value['energy'].'</progress> </li>';
-            echo '<li> <label for="danceability"> danceability:</label> <progress id="danceability" value="'.$value['danceability'].'" max=100> '.$value['danceability'].'</progress> </li>';
-            echo '<li> <label for="liveness"> liveness:</label> <progress id="liveness" value="'.$value['liveness'].'" max=100> '.$value['liveness'].'</progress> </li>';            
-            echo '<li> <label for="valence"> valence:</label> <progress id="valence" value="'.$value['valence'].'" max=100> '.$value['valence'].'</progress> </li>';
-            echo '<li> <label for="acousticness"> acousticness:</label> <progress id="acousticness" value="'.$value['acousticness'].'" max=100> '.$value['acousticness'].'</progress> </li>';
-            echo '<li> <label for="speechiness"> speechiness:</label> <progress id="speechiness" value="'.$value['speechiness'].'" max=100> '.$value['speechiness'].'</progress> </li>';
-            echo '<li> <label for="popularity"> popularity:</label> <progress id="popularity" value="'.$value['popularity'].'" max=100> '.$value['popularity'].'</progress> </li>';
-            echo '</ul>';
+            echo "<h2>".$value['title']."</h2>";
+            echo "<div name='grid grid-item1'>Artist: ".$value['name'];
+            echo "<br/>Band Type: ".$value['type'];
+            echo "<br/>Genre: ".$value['genre'];
+            echo "<br/>Year: ".$value['year'];
+            echo "<br/>Duration: ".$value['duration'] ."</div>";
+            echo "<div name='grid grid-item2'><table>";
+            echo '<tr> <td> bpm: </td> <td> <progress id="bpm" value="'.$value['bpm'].'" max=100> </progress> </td> </tr>';
+            echo '<tr> <td> Energy: </td> <td> <progress id="energy". value="'.$value['energy'].'" max=100> </progress> </td> </tr>';
+            echo '<tr> <td> Danceability:</td> <td> <progress id="danceability" value="'.$value['danceability'].'" max=100> </progress> </td> </tr>';
+            echo '<tr> <td> Liveness:</td> <td> <progress id="liveness" value="'.$value['liveness'].'" max=100> </progress> </td> </tr>';            
+            echo '<tr> <td> Valence:</td> <td> <progress id="valence" value="'.$value['valence'].'" max=100> </progress> </td> </tr>';
+            echo '<tr> <td> Acousticness:</td> <td> <progress id="acousticness" value="'.$value['acousticness'].'" max=100> </progress> </td> </tr>';
+            echo '<tr> <td> Speechiness:</td> <td> <progress id="speechiness" value="'.$value['speechiness'].'" max=100> </progress> </td> </tr>';
+            echo '<tr> <td> Popularity:</td> <td> <progress id="popularity" value="'.$value['popularity'].'" max=100> </progress> </td> </tr>';
+            echo '</table> </div>';
         }
     ?>
 </main>  

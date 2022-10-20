@@ -1,6 +1,11 @@
 footer{
+    /*always displays at bottom of page*/
+    position: relative;
+    bottom: 0%;
+    width: 100%;
     display: flex;
     border: 3px solid;
+
 }
 
 footer p{

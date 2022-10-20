@@ -1,0 +1,34 @@
+p.search-no-results{
+    color: white;
+    background-color: brown;
+    text-align: center;
+    align-content: center;
+    height: 50px;
+}
+
+.grid-container{
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+table{
+    width: 100%;
+    height: auto;
+}
+
+th{
+    font-size: 20px;
+}
+
+td{
+    padding-left: auto;
+    padding-right: auto;
+    text-align: center;
+    vertical-align: middle;
+}
+
+section{
+    border-top: 3px solid;
+    margin-top: 50px;
+}

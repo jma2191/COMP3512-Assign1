@@ -1,7 +1,7 @@
 <?php
     require_once('includes\config.inc.php');
-    include('includes\head-and-footer.php');
-    include('includes\database-helper.php');
+    include('includes\head-and-footer.inc.php');
+    include('includes\database-helper.inc.php');
 
     try{
         $pdo = DatabaseHelper::createConnection(DBCONNSTRING,DBUSER,DBPASS);
@@ -28,6 +28,7 @@
 <main class="grid-container">
     <section>
         <h1>Search By </h1>
+        <p> Select the raido button to search by category before submitting </p>
         <form method="get" action="browse-search-result-page.php">
             <div>
                 <input type="radio" id="title-rad" name="search-rad" value="title-rad" checked/>
