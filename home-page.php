@@ -26,8 +26,6 @@
     <link rel="stylesheet" href="css\home.css" />
     <link rel="stylesheet" href="css\nav.css" />
     <link rel="stylesheet" href="css\footer.css" />
-
-
     </head>
 <body>
 <main>
@@ -37,7 +35,7 @@
         Git Hub Repository: <a href='<?=$githubLink?>'><?=$githubLink?></a>  
     </div>
     <section class="grid-container">
-        <section class="grid grid-1">
+        <div class="grid grid-1">
             <h2>Top Genres</h2>
             <div>
                 <?php
@@ -58,8 +56,8 @@
                     }        
                 ?>
             </div>
-        </section>
-        <section class="grid">
+        </div>
+        <div class="grid">
             <h2>Top Artists</h2>
             <div>
             <?php
@@ -80,8 +78,8 @@
                 }            
             ?>
             </div>
-        </section>
-        <section class="grid">
+        </div>
+        <div class="grid">
             <h2>Popular Songs</h2>
             <div>
             <?php
@@ -92,8 +90,8 @@
                 }        
             ?>
             </div>
-        </section>
-        <section class="grid">
+        </div>
+        <div class="grid">
             <h2>One-hit Wonders</h2>
             <div>
             <?php
@@ -104,8 +102,8 @@
                 }        
             ?>
             </div>
-        </section>
-        <section class="grid">
+        </div>
+        <div class="grid">
             <h2>Acoustic Songs</h2>
             <div>
             <?php
@@ -116,8 +114,8 @@
                 }        
             ?>
             </div>
-        </section>
-        <section class="grid">
+        </div>
+        <div class="grid">
             <h2>Club Songs</h2>
             <div>
             <?php
@@ -128,8 +126,8 @@
                 }        
             ?>
             </div>
-        </section>
-        <section class="grid">
+        </div>
+        <div class="grid">
             <h2>Running Songs</h2>
             <div>
             <?php
@@ -140,8 +138,8 @@
                 }        
             ?>
             </div>
-        </section>
-        <section class="grid">
+        </div>
+        <div class="grid">
             <h2>Studying Songs</h2>
             <div>
             <?php
@@ -152,7 +150,7 @@
                 }        
             ?>
             </div>
-        </section>
+        </div>
     </section>
 </main>  
 <?php generateFooter(); ?> 
