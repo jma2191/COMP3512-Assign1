@@ -1,34 +1,6 @@
 <?php
     require_once('config.inc.php');
     include('includes\database-helper.inc.php');
-    
-    function displaySearch(){
-        $data = getDBSongData();
-
-        if(count($data) == 0){
-            echo "<p class='search-no-results'> There seems to be no song that meets your search conditions </p>";
-        }
-        echo "<table>";
-        echo "<th> Title </th>";
-        echo "<th> Artist </th>";
-        echo "<th> Year </th>";
-        echo "<th> Genre </th>";
-        echo "<th> Popularity </th>";
-        echo "<th></th>"; //left empty for the buttons
-        echo "<th></th>"; 
-        foreach($data as $value){
-            echo "<tr>";
-            echo "<td>".$value['title']."</td>";
-            echo "<td>".$value['name']."</td>";
-            echo "<td>".$value['year']."</td>";
-            echo "<td>".$value['genre']."</td>";
-            echo "<td>".$value['popularity']."</td>";
-            echo "<td> <a href='view-favourites-page.php?add=".$value['song_id']."'> <button>Add to Favourites</button></a> </td>";
-            echo "<td> <form method='get' action='single-song-page.php?".$value['song_id']."'><button type='submit' value='".$value['song_id']."' name='song_id'>View</button></form> </td>";
-            echo "</tr>";
-        }
-        echo "</table>";
-    }
 
     function getDBSongData(){
         try{

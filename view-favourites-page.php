@@ -37,6 +37,8 @@
     ?>
     <link rel="stylesheet" href="css\nav.css" />
     <link rel="stylesheet" href="css\footer.css" />
+    <link rel="stylesheet" href="css\browse.css" />
+
 </head>
 <body>
 <main class="grid-container">

@@ -1,9 +1,9 @@
 .grid-container{
-    display: grid;
-    grid-template-columns: auto auto auto;
+    display: flex;
 }
 
 input{
     grid-column-start: 0;
     grid-column-end: 2;
 }
+

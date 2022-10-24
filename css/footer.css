@@ -1,5 +1,4 @@
 footer{
-    /*always displays at bottom of page*/
     position: relative;
     bottom: 0px;
     width: 99%;
@@ -8,7 +7,8 @@ footer{
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
-    border-top: 3px solid;
+    border: 3px;
+    border-style: outset;
 }
 
 footer p{
