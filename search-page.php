@@ -23,6 +23,8 @@
     ?>
     <link rel="stylesheet" href="css\nav.css" />
     <link rel="stylesheet" href="css\footer.css" />
+    <link rel="stylesheet" href="css\search.css" />
+
 </head>
 <body>
 <main class="grid-container">
@@ -64,7 +66,7 @@
             <div>
                 <input type="radio" id="year-rad" name="search-rad" value="year-rad"/>
                 <label for="year-rad">Year</label>
-                    <div>
+                    <div class="sub-options">
                             <input for="year-rad" type="radio" id="year-rad-less" name="years-rad" value="year-rad-less"/>
                             <label for="year-rad-less">Less</label>
                             <input for="year-rad-less" type="number" id="year-less" name="year-less"/>
@@ -76,7 +78,7 @@
             <div>
                 <input type="radio" id="pop-rad" name="search-rad" value="pop-rad"/>
                 <label for="pop-rad">Popularity</label>
-                    <div>
+                    <div class="sub-options">
                             <input for="pop-rad" type="radio" id="pop-rad-less" name="popu-rad" value="pop-rad-less"/>
                             <label for="pop-rad-less">Less</label>
                             <input for="pop-rad-less" type="number" id="pop-less" name="pop-less"/>

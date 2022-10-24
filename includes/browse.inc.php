@@ -33,7 +33,11 @@
                     }
                     break;
                 case 'year-rad':
-                    $subRadType = $_GET['years-rad'];
+                    $subRadType = null;
+                    if(!empty($_GET['years-rad'])){
+                        //if year-rad was picked but the sub radio button wasn't
+                        $subRadType = $_GET['years-rad'];
+                    }
                     if($subRadType == 'year-rad-great' and !empty($_GET['year-great'])){
                     $data = $songGate -> searchByYearGreater($_GET['year-great'] );
                     }
@@ -42,7 +46,11 @@
                     }
                     break;
                 case 'pop-rad':
-                    $subRadType = $_GET['popu-rad'];
+                    $subRadType = null;
+                    if(!empty($_GET['popu-rad'])){
+                        //if year-rad was picked but the sub radio button wasn't
+                        $subRadType = $_GET['popu-rad'];
+                    }
                     if($subRadType == 'pop-rad-great' and !empty($_GET['pop-great'])){
                     $data = $songGate -> searchByPopularityGreater($_GET['pop-great'] );
                     }

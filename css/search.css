@@ -1,9 +1,9 @@
-.grid-container{
-    display: flex;
+div:not(div.sub-options){
+    margin: 10px;
 }
 
-input{
-    grid-column-start: 0;
-    grid-column-end: 2;
+.sub-options{
+    margin-top: 5px;
+    margin-left: 20px;
 }
 

@@ -28,20 +28,20 @@
     <section> 
         <h1>Song Details</h1>
     </section>
-    <section>
+    <section class="details">
         <?php
             $data = $songGate -> getSingleSong($_GET['song_id']);
             foreach($data as $value){
                 echo "<h2>".$value['title']."</h2>";
                 echo "<div class='grid-container'>";
-                    echo "<div name='grid grid-1'>";
+                    echo "<div class='grid grid-1 song-details'>";
                     echo "Artist: ".$value['name'];
                         echo "<br/>Band Type: ".$value['type'];
                         echo "<br/>Genre: ".$value['genre'];
                         echo "<br/>Year: ".$value['year'];
                         echo "<br/>Duration: ".$value['duration'];
                     echo "</div>";
-                    echo "<div name='grid grid-2'>"; 
+                    echo "<div class='grid song-stats'>"; 
                         echo "<table>";
                         echo '<tr> <td> bpm: </td> <td> <progress id="bpm" value="'.$value['bpm'].'" max=100> </progress> </td> </tr>';
                         echo '<tr> <td> Energy: </td> <td> <progress id="energy". value="'.$value['energy'].'" max=100> </progress> </td> </tr>';

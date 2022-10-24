@@ -7,14 +7,7 @@ class DatabaseHelper{
         return $pdo;
     }
 
-    public static function runQuery($pdo, $sql){
-        //used for sections where user input is involved but is limited
-        $statement = $pdo->prepare($sql);
-        $statement -> execute();
-        return $statement;
-    }
-
-    public static function runQuerySinglePrepare($pdo, $sql, $value, $replace){
+    public static function runQuery($pdo, $sql, $value, $replace){
         //used for when user input is involved and has no limitations
         //only does basic prevention
         $statement = $pdo->prepare($sql);
@@ -22,11 +15,18 @@ class DatabaseHelper{
         $statement -> execute();
         return $statement;
     }
+
+    public static function runBasicQuery($pdo, $sql){
+        //used for when user input is not involved
+        $statement = $pdo->prepare($sql);
+        $statement -> execute();
+        return $statement;
+    }
 }
 
 class SongDB{
 
-    private static $sqlSearch = "SELECT title, artist_name as name, type_name as type, genre_name as genre, year, duration, bpm, energy, danceability, liveness, valence, acousticness, speechiness, popularity, songs.artist_id, artist_type_id, songs.genre_id, song_id
+    private static $sqlSearch = "SELECT title, artist_name as name, type_name as type, genre_name as genre, year, SEC_TO_TIME(duration) as duration, bpm, energy, danceability, liveness, valence, acousticness, speechiness, popularity, songs.artist_id, artist_type_id, songs.genre_id, song_id
     FROM songs
     LEFT JOIN artists ON artists.artist_id=songs.artist_id
     LEFT JOIN genres ON genres.genre_id=songs.genre_id
@@ -37,15 +37,15 @@ class SongDB{
     }
 
     public function getSingleSong($songID){
-        $sql = self::$sqlSearch. ' WHERE song_id ='. $songID;
-        $results = DatabaseHelper::runQuery($this->pdo, $sql);
+        $sql = self::$sqlSearch. ' WHERE song_id = :songID';
+        $results = DatabaseHelper::runQuery($this->pdo, $sql, $songID, ":songID");
         return $results -> fetchAll();
     }
 
     public function getSongs($songID){
         //for multiple songs
-        $sql = self::$sqlSearch. ' WHERE song_id in ('. $songID.")";
-        $results = DatabaseHelper::runQuery($this->pdo, $sql);
+        $sql = self::$sqlSearch. ' WHERE song_id in (:songID)';
+        $results = DatabaseHelper::runQuery($this->pdo, $sql, $songID, ":songID");
         return $results -> fetchAll();
     }
 
@@ -53,49 +53,49 @@ class SongDB{
     /*** SEARCH FUNCTIONS ***/
     public function searchByAll(){
         $sql = self::$sqlSearch;
-        $results = DatabaseHelper::runQuery($this->pdo, $sql);
+        $results = DatabaseHelper::runBasicQuery($this->pdo,$sql);
         return $results -> fetchAll();
     }
 
     public function searchByTitle($title){
         $sql = self::$sqlSearch." WHERE title LIKE :songTitle"; //near match because user can search partial
-        $results = DatabaseHelper::runQuerySinglePrepare($this->pdo, $sql, "%$title%", ':songTitle');
+        $results = DatabaseHelper::runQuery($this->pdo, $sql, "%$title%", ':songTitle');
         return $results -> fetchAll();
     }
 
     public function searchByYearGreater($greater){
-        $sql = self::$sqlSearch." WHERE year >= $greater";
-        $results = DatabaseHelper::runQuery($this->pdo, $sql);
+        $sql = self::$sqlSearch." WHERE year >= :great";
+        $results = DatabaseHelper::runQuery($this->pdo, $sql, $greater, ":great");
         return $results -> fetchAll();
     }
 
     public function searchByYearLesser($less){
-        $sql = self::$sqlSearch." WHERE year <= $less";
-        $results = DatabaseHelper::runQuery($this->pdo, $sql);
+        $sql = self::$sqlSearch." WHERE year <= :less";
+        $results = DatabaseHelper::runQuery($this->pdo, $sql, $less, ":less");
         return $results -> fetchAll();
     }
 
     public function searchByPopularityGreater($greater){
-        $sql = self::$sqlSearch ." WHERE popularity >= $greater";
-        $results = DatabaseHelper::runQuery($this->pdo, $sql);
+        $sql = self::$sqlSearch ." WHERE popularity >= :great";
+        $results = DatabaseHelper::runQuery($this->pdo, $sql, $greater, ":great");
         return $results -> fetchAll();
     }
 
     public function searchByPopularityLesser($less){
-        $sql = self::$sqlSearch ." WHERE popularity <= $less";
-        $results = DatabaseHelper::runQuery($this->pdo, $sql);
+        $sql = self::$sqlSearch ." WHERE popularity <= :less";
+        $results = DatabaseHelper::runQuery($this->pdo, $sql, $less, ":less");
         return $results -> fetchAll();
     }
 
     public function searchByArtist($artist){
         $sql = self::$sqlSearch." WHERE artist_name = :artist";
-        $results = DatabaseHelper::runQuerySinglePrepare($this->pdo, $sql, $artist, ':artist');
+        $results = DatabaseHelper::runQuery($this->pdo, $sql, $artist, ':artist');
         return $results -> fetchAll();
     }
 
     public function searchByGenre($genre){
         $sql = self::$sqlSearch." WHERE genre_name LIKE :genre";
-        $results = DatabaseHelper::runQuerySinglePrepare($this->pdo, $sql, $genre, ':genre');
+        $results = DatabaseHelper::runQuery($this->pdo, $sql, $genre, ':genre');
         return $results -> fetchAll();
     }
 
@@ -107,7 +107,7 @@ class SongDB{
         ON artists.artist_id = songs.artist_id
         GROUP BY title 
         ORDER BY popularity DESC LIMIT 10";
-        $results = DatabaseHelper::runQuery($this->pdo, $sql);
+        $results = DatabaseHelper::runBasicQuery($this->pdo, $sql);
         return $results -> fetchAll();
     }
 
@@ -119,7 +119,7 @@ class SongDB{
         GROUP BY artist_name 
         HAVING COUNT(title) = 1
         ORDER BY popularity DESC LIMIT 10";
-        $results = DatabaseHelper::runQuery($this->pdo, $sql);
+        $results = DatabaseHelper::runBasicQuery($this->pdo, $sql);
         return $results -> fetchAll();
     }
 
@@ -130,7 +130,7 @@ class SongDB{
         GROUP BY title 
         HAVING acousticness > 40
         ORDER BY duration DESC LIMIT 10";
-        $results = DatabaseHelper::runQuery($this->pdo, $sql);
+        $results = DatabaseHelper::runBasicQuery($this->pdo, $sql);
         return $results -> fetchAll();
     }
 
@@ -141,7 +141,7 @@ class SongDB{
         GROUP BY title 
         HAVING danceability > 80
         ORDER BY ((danceability*1.6)+(energy*1.4)) DESC LIMIT 10";
-        $results = DatabaseHelper::runQuery($this->pdo, $sql);
+        $results = DatabaseHelper::runBasicQuery($this->pdo, $sql);
         return $results -> fetchAll();
     }
 
@@ -152,7 +152,7 @@ class SongDB{
         GROUP BY title 
         HAVING bpm > 100 AND bpm < 115
         ORDER BY ((energy*1.3)+(valence*1.6)) DESC LIMIT 10";
-        $results = DatabaseHelper::runQuery($this->pdo, $sql);
+        $results = DatabaseHelper::runBasicQuery($this->pdo, $sql);
         return $results -> fetchAll();
     }
 
@@ -163,7 +163,7 @@ class SongDB{
         GROUP BY title 
         HAVING (bpm > 100 AND bpm < 115) AND (speechiness > 1 AND speechiness < 20)
         ORDER BY ((acousticness*0.8)+(100-speechiness)+(100-valence)) DESC LIMIT 10";
-        $results = DatabaseHelper::runQuery($this->pdo, $sql);
+        $results = DatabaseHelper::runBasicQuery($this->pdo, $sql);
         return $results -> fetchAll();
     }
 
@@ -176,7 +176,7 @@ class ArtistDB{
 
     public function getArtistNames(){
         $sql = "SELECT artist_name as name FROM artists";
-        $results = DatabaseHelper::runQuery($this->pdo,$sql);
+        $results = DatabaseHelper::runBasicQuery($this->pdo,$sql);
         return $results -> fetchAll();
     }
     
@@ -187,7 +187,7 @@ class ArtistDB{
         ON songs.artist_id = artists.artist_id
         GROUP BY artist_name 
         ORDER BY Count(title) DESC LIMIT 10";
-        $results = DatabaseHelper::runQuery($this->pdo, $sql);
+        $results = DatabaseHelper::runBasicQuery($this->pdo, $sql);
         return $results -> fetchAll();
     }
 }
@@ -199,7 +199,7 @@ class GenreDB{
 
     public function getGenres(){
         $sql = "SELECT genre_name as genre FROM genres";
-        $results = DatabaseHelper::runQuery($this->pdo,$sql);
+        $results = DatabaseHelper::runBasicQuery($this->pdo,$sql);
         return $results -> fetchAll();
     }
 
@@ -210,7 +210,7 @@ class GenreDB{
         ON songs.genre_id = genres.genre_id
         GROUP BY genre 
         ORDER BY COUNT(title) DESC LIMIT 10";
-        $results = DatabaseHelper::runQuery($this->pdo, $sql);
+        $results = DatabaseHelper::runBasicQuery($this->pdo, $sql);
         return $results -> fetchAll();
     }
 }
