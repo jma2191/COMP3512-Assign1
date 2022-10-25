@@ -1,9 +1,0 @@
-div:not(div.sub-options){
-    margin: 10px;
-}
-
-.sub-options{
-    margin-top: 5px;
-    margin-left: 20px;
-}
-
