@@ -37,11 +37,14 @@
     ?>
     <link rel="stylesheet" href="css\nav.css" />
     <link rel="stylesheet" href="css\footer.css" />
-    <link rel="stylesheet" href="css\browse.css" />
+    <link rel="stylesheet" href="css\favourites.css" />
 
 </head>
 <body>
 <main class="grid-container">
+    <div class='remove-all'>
+        <form action="view-favourites-page.php?remove=all"> <input type="submit" value="Remove All"/> </form>
+    </div>
     <section>
     <?php
             echo "<table>";

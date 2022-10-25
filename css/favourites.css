@@ -30,3 +30,13 @@ section{
     border-top: 3px solid;
     margin-top: 20px;
 }
+
+.remove-all{
+    margin-top: 10px;
+    margin-left: auto;
+    flex-direction: row-reverse;
+}
+.remove-all input{
+    width: 300px;
+    height: 30px;
+}

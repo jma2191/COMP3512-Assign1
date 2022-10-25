@@ -62,7 +62,7 @@ td:first-child{
 }
 
 table{
-    font-size: larger;
+    font-size: larger   ;
     border: 3px groove rgb(206, 190, 136, 0.2); /*faded border*/
     background-color: rgb(231, 218, 176);
     width: 500px;
