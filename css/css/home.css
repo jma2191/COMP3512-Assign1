@@ -1,0 +1,63 @@
+main{
+    text-align: center;
+}
+
+
+.grid-container{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 0;
+    margin: 1;
+    gap: 10px;
+}
+
+.grid{
+    width: auto;
+    height: 360px;
+    overflow: auto; /*allows scrolling within box*/
+    background: rgb(235, 236, 236);
+    border: 5px groove;
+    border-color: rgb(114, 150, 192);
+}
+
+.grid-1{
+    grid-column-start: 0;
+    grid-column-end: 1;
+}
+
+
+td{
+    padding: 3px;
+    text-align: center;
+    vertical-align: middle;
+    border: 3px double;
+    background: rgb(189, 218, 255);
+}
+
+table{
+    margin-top: 10px;
+    width: 100%;
+    height: 100%;
+    padding-bottom: auto;
+}
+
+th{
+    position: sticky;
+    top: 30px; /*position under the header stays there while scrolling*/
+    background: rgb(207, 240, 250);
+    border: 1px groove;
+
+}
+
+h2{
+    position: sticky; /*position to stay top of the box*/
+    top: 0px;
+    border-bottom: 2px groove;
+    background: rgb(12, 140, 179);
+    margin: 0;
+    padding: 0;
+}
+
+.description{
+    padding: 5px;
+}
