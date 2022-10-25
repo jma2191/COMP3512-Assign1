@@ -147,7 +147,7 @@
                     generateHomeList($songGate->getTopStudySongs());
                 }catch (Exception $e){
                     die($e ->getMessage());
-                }        
+                }  
             ?>
             </div>
         </div>

@@ -9,7 +9,7 @@
             $data = $songGate -> searchByAll(); 
             //this is to catch cases where user clicked submit with no input
             //made assumption that if no input is in but user clicked search it will display all songs
-            
+
             if(!isset($_GET['search-rad'])){
                 //if user went directly to browse page remove the error line here
                 return $data;
@@ -60,6 +60,7 @@
                     break;
             }
             
+            $pdo = null;
 
             return $data;
     

@@ -41,6 +41,7 @@
                 <input type="radio" id="artist-rad" name="search-rad" value="artist-rad"/>
                 <label for="artist-rad">Artist</label>
                     <?php
+                    try{
                         $data = $artGate -> getArtistNames();
                         echo '<select id="artist" name="artist" value=""/>';
                         echo '<option value="" selected="selected" hidden> Select Artist Name </option>';
@@ -48,12 +49,16 @@
                             echo "<option value='".$value['name']."'>".$value['name'] ."</option>";
                         }
                         echo '</select>';
+                    }catch (Exception $e){
+                        die($e ->getMessage());
+                    }     
                     ?>
             </div>
             <div>
                 <input type="radio" id="genre-rad" name="search-rad" value="genre-rad"/>
                 <label for="genre-rad">Genre</label>
                 <?php
+                try{
                     $data = $genGate -> getGenres();
                     echo '<select id="genres" name="genres" value=""/>';
                     echo '<option value="" selected="selected" hidden> Select a Genre </option>';
@@ -61,6 +66,9 @@
                         echo "<option value='".$value['genre']."'>".$value['genre'] ."</option>";
                     }
                     echo '</select>';
+                }catch (Exception $e){
+                    die($e ->getMessage());
+                }     
                 ?>
             </div>
             <div>
