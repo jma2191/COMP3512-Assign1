@@ -43,7 +43,7 @@
 <body>
 <main class="grid-container">
     <div class='remove-all'>
-        <form action="view-favourites-page.php?remove=all"> <input type="submit" value="Remove All"/> </form>
+        <a href="view-favourites-page.php?remove=all"> <input type="submit" value="Remove All"/> </a>
     </div>
     <section>
     <?php
